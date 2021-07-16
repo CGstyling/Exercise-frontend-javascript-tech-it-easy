@@ -1,0 +1,22 @@
+/** {*/
+/*    background-color: lightgoldenrodyellow;*/
+/*}*/
+
+li.Banaan::Marker {
+    color: black;
+}
+
+.Banaan {
+    color: red;
+}
+
+li.aardbei::Marker {
+    color: black;
+}
+
+.aardbei {
+    color: green;
+}
+
+
+
