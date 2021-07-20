@@ -174,6 +174,7 @@ let tvSize = inventory.map((size) => {
 });
 
 function sumOfSize (tvSize) {
+
     let stringWithAllSizes = "";
     for (let i = 0; i < tvSize.length ; i++) {
         let size = Math.floor(tvSize[i] * 2.54);
@@ -190,7 +191,6 @@ console.log(sumOfSize(tvSize[0]));
 const page = document.createElement(`p`)
 //zet er iets in
 let newline = "\r\n";
-console.log(sumOfSize(tvSize[1]));
 page.textContent = joinProperties()[1] + newline +  creatPrice()[1] + newline + sumOfSize(tvSize[1])
 //sla referentie op in een container
 const tvInfo = document.getElementById("page");
@@ -200,19 +200,26 @@ tvInfo.appendChild(page);
 
 // Opdracht 5e: Schrijf een functie die ALLE tv's weergeeft op de pagina zoals in het voorbeeld. Dit wil je natuurlijk niet acht keer opnieuw schrijven, want nu zijn het 8 tv's, maar in de toekomst misschien wel 200! Gebruik in deze functie de voorgaande functies die je hebt geschreven, om onderdelen van de data te formatten. Deze "tv-generator-functie" verwacht één parameter: de volledige array met tv-objecten. Vergeet 'm niet aan te roepen!
 
+// function generateTInformation () {
+//     for (let i = 0; i < inventory.length ; i++) {
+//         console.log(joinProperties(inventory)[i] + newline + creatPrice(inventory)[i] + newline + sumOfSize(tvSize[i]))
+//     }
+// }
+//
+// (generateTInformation(inventory));
+
 function generateTInformation () {
 
-    const allInfo = inventory.filter((inv) => {
-        return joinProperties(inv) + creatPrice(inv) + sumOfSize(inv);
-    })
-    return allInfo;
-
+    for (let i = 0; i < inventory.length ; i++) {
+        const allInfo = document.createElement(`p`);
+        let newline = "\r\n";
+        allInfo.textContent = joinProperties(inventory)[i] + newline + creatPrice(inventory)[i] + newline + sumOfSize(tvSize[i])
+        const tvInfo = document.getElementById("all-Info");
+        tvInfo.appendChild(allInfo);
+    }
 }
 
-console.log(generateTInformation())
-
-
-
+(generateTInformation(inventory));
 
 // BONUS
 // Maak drie knoppen op de pagina: Sorteer op prijs, AmbiLight TV's en Uitverkochte exemplaren. Gebruik de code die je in opdracht 2b, 2c en 2d hebt gemaakt en schrijf dit om naar functies zodat je ze kunt aanroepen op het moment dat de buttons geklikt worden. Zorg ervoor dat de functies de uitkomsten in de de console loggen als de gebruiker op de bijbehorende knop klikt. Tip: Google eens naar het onclick event van buttons!
