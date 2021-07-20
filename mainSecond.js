@@ -128,6 +128,7 @@ list.appendChild(listOfTotalPrice);
 
 // OPDR 4
 // Geef de type-namen van twee tv's weer op de pagina. Welke tv's dat precies zijn, maakt niet zoveel uit. Voor nu betekent dit dat je het appenden van de nodes twee keer moet uitschrijven, dat is niet erg!
+
 const list3 = document.getElementById("list")
 const tvType1 = document.createElement("li");
 tvType1.textContent = "Het eerste Tv- Type is: " + tvType[0] + "van de Phillips 4K tv";
@@ -146,40 +147,75 @@ list.appendChild(tvType2 );
 // Opdracht 5a: Zorg ervoor dat er een string wordt gegenereerd voor de naam van een tv. Maak een functie die één tv-object als parameter verwacht en de naam op de volgende manier samenvoegt: [merk] [type] - [naam] zoals Philips 43PUS6504/12 - 4K TV of NIKKEI NH3216SMART - HD smart TV. Zorg ervoor dat je deze functie voor iedere tv zou kunnen gebruiken.
 //type, name brand
 
-    let brand = inventory.map(function (obj) {
-        return obj.brand;
-    });
-    let name = inventory.map(function (obj) {
-        return obj.name;
-    });
-    let type = inventory.map(function (obj) {
-        return obj.type;
-    });
+function joinProperties () {
+    let properties = inventory.map(function (obj) {
+        return( obj.brand + " " +  obj.name + " " + obj.type).toString();
+    })
+   return properties;
+}
+console.log(joinProperties()[1]);
 
-    console.log(brand, name, type)
-
-const tvinformation = brand[0] + " | " + name[0] +  " | " + type[0];
-console.log(tvinformation);
 
 // Opdracht 5b: Zorg ervoor dat de prijs van een tv netjes geformat wordt. Maak een functie die één tv-prijs als parameter verwacht (zoals 379) en daar de volgende string van maakt: €379,-. Zorg ervoor dat je deze functie voor iedere tv zou kunnen gebruiken.
 
+function creatPrice() {
     let price = inventory.map(function (obj) {
-        return obj.price.toString();
-    });
+        return "€" + obj.price.toString();
+    })
+    return price;
+}
 
-const tv1 = "€" + price[0];
-console.log(tv1)
+console.log(creatPrice()[1]);
 
 // Opdracht 5c: Zorg ervoor dat er een string wordt gegenereerd voor alle beschikbare schermgroottes van één tv in zowel inches als cm Maak een functie die één screen-sizes array verwacht en de groottes op de volgende manier samenvoegt: [schermgrootte] inches ([schermgrootte omgerekend]cm) | [schermgrootte] inches ([schermgrootte omgerekend]cm) etc. Dus een input van [32] geeft 32 inch (81 cm) en een input van [43, 50, 55, 58] geeft 43 inch (109 cm) | 50 inch (127 cm) | 58 inch (147 cm). Zorg ervoor dat je deze functie voor iedere tv zou kunnen gebruiken, zowel voor tv's met maar één schermgrootte als met tientallen schermgroottes.
 
+let tvSize = inventory.map((size) => {
+    return size.availableSizes;
+});
 
+function sumOfSize (tvSize) {
+    let stringWithAllSizes = "";
+    for (let i = 0; i < tvSize.length ; i++) {
+        let size = Math.floor(tvSize[i] * 2.54);
+        stringWithAllSizes = stringWithAllSizes + tvSize[i] + " inch " + "(" + size + " cm" + ")";
+    }
+    return stringWithAllSizes;
+}
+
+console.log(sumOfSize(tvSize[0]));
 
 // Opdracht 5d: Zorg ervoor de informatie van één van de twee tv's zoals het voorbeeld wordt weergegeven op de pagina. Gebruik hiervoor de functies die je hebt gemaakt in opdracht 5a, 5b en 5c.
 
+// creeer element
+const page = document.createElement(`p`)
+//zet er iets in
+let newline = "\r\n";
+console.log(sumOfSize(tvSize[1]));
+page.textContent = joinProperties()[1] + newline +  creatPrice()[1] + newline + sumOfSize(tvSize[1])
+//sla referentie op in een container
+const tvInfo = document.getElementById("page");
+//zet het in de dom
+tvInfo.appendChild(page);
 
 
 // Opdracht 5e: Schrijf een functie die ALLE tv's weergeeft op de pagina zoals in het voorbeeld. Dit wil je natuurlijk niet acht keer opnieuw schrijven, want nu zijn het 8 tv's, maar in de toekomst misschien wel 200! Gebruik in deze functie de voorgaande functies die je hebt geschreven, om onderdelen van de data te formatten. Deze "tv-generator-functie" verwacht één parameter: de volledige array met tv-objecten. Vergeet 'm niet aan te roepen!
 
+function generateTInformation () {
+
+    const allInfo = inventory.filter((inv) => {
+        return joinProperties(inv) + creatPrice(inv) + sumOfSize(inv);
+    })
+    return allInfo;
+
+}
+
+console.log(generateTInformation())
+
+
+
+
+// BONUS
+// Maak drie knoppen op de pagina: Sorteer op prijs, AmbiLight TV's en Uitverkochte exemplaren. Gebruik de code die je in opdracht 2b, 2c en 2d hebt gemaakt en schrijf dit om naar functies zodat je ze kunt aanroepen op het moment dat de buttons geklikt worden. Zorg ervoor dat de functies de uitkomsten in de de console loggen als de gebruiker op de bijbehorende knop klikt. Tip: Google eens naar het onclick event van buttons!
 
 
 

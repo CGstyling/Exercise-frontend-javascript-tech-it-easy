@@ -18,5 +18,8 @@ li.aardbei::Marker {
     color: green;
 }
 
+#page {
+    white-space: pre;
+}
 
 
